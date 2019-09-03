@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const IsScrolled = () => (
   <div />
 );
 
-export default src;
+export default IsScrolled;
