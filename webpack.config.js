@@ -26,8 +26,7 @@ const exp = {
     "react",
     "react-dom",
   ],
+  devtool: "#source-map",
 };
-
-exp.devtool = "#source-map";
 
 module.exports = exp;
