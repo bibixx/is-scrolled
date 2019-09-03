@@ -1,7 +1,2 @@
-import React from "react";
-
-const IsScrolled = () => (
-  <div />
-);
-
-export default IsScrolled;
+// eslint-disable-next-line import/prefer-default-export
+export { default as useIsScrolled } from "./useIsScrolled";
