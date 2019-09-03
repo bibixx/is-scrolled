@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as useIsScrolled } from "./useIsScrolled";
+export { default } from "./IsScrolled";
