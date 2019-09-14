@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState } from "react";
-import ResizeObserver from "resize-observer-polyfill";
 
 import onScrollFn from "../utils/onScroll";
 import onResizeFn from "../utils/onResize";
+
+import { setupListeners, cleanupListeners } from "../utils/listeners";
 
 const useIsScrolled = () => {
   const containerRef = useRef(null);
@@ -22,26 +23,22 @@ const useIsScrolled = () => {
     const { current: $container } = containerRef;
     const { current: $content } = contentRef;
 
-    const onScroll = () => onScrollFn(setScrolledTo)($container, $content);
-    const onResize = () => onResizeFn(setIsScrollable)($container, $content);
+    const onScroll = () => setScrolledTo(onScrollFn($container, $content));
+    const onResize = () => setIsScrollable(onResizeFn($container, $content));
 
-    if (!$container) {
-      return () => {};
-    }
-
-    $container.addEventListener("scroll", onScroll);
-
-    const observer = new ResizeObserver(() => {
-      onResize();
-      onScroll();
+    const { observer } = setupListeners({
+      $container,
+      $content,
+      onScroll,
+      onResize,
     });
 
-    observer.observe($container);
-    observer.observe($content);
-
     return () => {
-      $container.removeEventListener("scroll", onScroll);
-      observer.disconnect();
+      cleanupListeners({
+        $container,
+        onScroll,
+        observer,
+      });
     };
   }, [containerRef, contentRef]);
 

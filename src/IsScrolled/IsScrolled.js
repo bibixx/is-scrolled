@@ -1,19 +1,22 @@
-import { Component, createRef } from "react";
+import React, { PureComponent, createRef } from "react";
 import PropTypes from "prop-types";
-import ResizeObserver from "resize-observer-polyfill";
 
 import onScrollFn from "../utils/onScroll";
 import onResizeFn from "../utils/onResize";
 
-export default class IsScrolled extends Component {
+import { setupListeners, cleanupListeners } from "../utils/listeners";
+
+export default class IsScrolled extends PureComponent {
   static propTypes = {
     children: PropTypes.func,
     render: PropTypes.func,
+    component: PropTypes.node,
   }
 
   static defaultProps = {
     children: null,
     render: null,
+    component: null,
   }
 
   state = {
@@ -50,38 +53,59 @@ export default class IsScrolled extends Component {
       onResize,
     } = this;
 
-    if (!$container) {
-      return;
-    }
-
-    $container.addEventListener("scroll", onScroll);
-
-    this.observer = new ResizeObserver(() => {
-      onResize();
-      onScroll();
+    const { observer } = setupListeners({
+      $container,
+      $content,
+      onScroll,
+      onResize,
     });
 
-    this.observer.observe($container);
-    this.observer.observe($content);
+    this.observer = observer;
   }
 
   componentWillUnmount() {
-    this.containerRef.current.removeEventListener("scroll", this.onScroll);
-    this.observer.disconnect();
+    const {
+      containerRef: {
+        current: $container,
+      },
+      onScroll,
+      observer,
+    } = this;
+
+    cleanupListeners({
+      $container,
+      onScroll,
+      observer,
+    });
   }
 
-  onScroll = () => onScrollFn(
-    v => this.setState({ isScrolledTo: v }),
-  )(this.containerRef.current, this.contentRef.current);
+  onScroll = () => {
+    this.setState({
+      isScrolledTo: onScrollFn(this.containerRef.current, this.contentRef.current),
+    });
+  };
 
-  onResize = () => onResizeFn(
-    v => this.setState({ isScrollable: v }),
-  )(this.containerRef.current, this.contentRef.current);
+  onResize = () => {
+    this.setState({
+      isScrollable: onResizeFn(this.containerRef.current, this.contentRef.current),
+    });
+  };
 
   render() {
-    const { children, render } = this.props;
+    const { children, render, component: PropComponent } = this.props;
     const { isScrolledTo, isScrollable } = this.state;
     const { containerRef, contentRef } = this;
+
+    if (PropComponent) {
+      return (
+        <PropComponent
+          isScrolledTo={isScrolledTo}
+          containerRef={containerRef}
+          contentRef={contentRef}
+          isScrollable={isScrollable}
+        />
+      );
+    }
 
     const renderFn = children || render;
 
