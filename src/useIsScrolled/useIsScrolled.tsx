@@ -16,7 +16,7 @@ const useIsScrolled = () => {
   });
   const [isScrollable, setIsScrollable] = useState({
     x: false,
-    Y: false,
+    y: false,
   });
 
   useEffect(() => {

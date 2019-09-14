@@ -22,9 +22,16 @@ TBA
 
 TBA
 
+
 ### Props
 
 TBA
+
+## Development
+
+```bash
+npx npm-link-shared ../ise/node_modules . react
+```
 
 ## 🤝 Contributing
 

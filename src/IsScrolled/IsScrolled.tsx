@@ -1,23 +1,46 @@
 import React, { PureComponent, createRef } from "react";
-import PropTypes from "prop-types";
 
 import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
-export default class IsScrolled extends PureComponent {
-  static propTypes = {
-    children: PropTypes.func,
-    render: PropTypes.func,
-    component: PropTypes.node,
-  }
+interface isScrolledTo {
+  left: boolean;
+  top: boolean;
+  right: boolean;
+  bottom: boolean;
+}
 
+interface isScrollable {
+  x: boolean;
+  y: boolean;
+}
+
+export interface ChildProps {
+  isScrolledTo: isScrolledTo;
+  containerRef: React.RefObject<unknown>;
+  contentRef: React.RefObject<unknown>;
+  isScrollable: isScrollable;
+}
+
+export interface IsScrolledProps {
+  children: React.FunctionComponent<ChildProps>;
+  render: Function;
+  component: React.ComponentType<ChildProps>;
+}
+
+export interface IsScrolledState {
+  isScrolledTo: isScrolledTo;
+  isScrollable: isScrollable;
+}
+
+export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolledState> {
   static defaultProps = {
     children: null,
     render: null,
     component: null,
-  }
+  };
 
   state = {
     isScrolledTo: {
@@ -28,15 +51,15 @@ export default class IsScrolled extends PureComponent {
     },
     isScrollable: {
       x: false,
-      Y: false,
+      y: false,
     },
-  }
+  };
 
   containerRef = createRef();
 
   contentRef = createRef();
 
-  observer = null;
+  observer: ResizeObserver = null;
 
   componentDidMount() {
     const {
@@ -96,21 +119,15 @@ export default class IsScrolled extends PureComponent {
     const { isScrolledTo, isScrollable } = this.state;
     const { containerRef, contentRef } = this;
 
-    if (PropComponent) {
-      return (
-        <PropComponent
-          isScrolledTo={isScrolledTo}
-          containerRef={containerRef}
-          contentRef={contentRef}
-          isScrollable={isScrollable}
-        />
-      );
-    }
+    const RenderComponent = children || PropComponent || render;
 
-    const renderFn = children || render;
-
-    return renderFn({
-      isScrolledTo, containerRef, contentRef, isScrollable,
-    });
+    return (
+      <RenderComponent
+        isScrolledTo={isScrolledTo}
+        containerRef={containerRef}
+        contentRef={contentRef}
+        isScrollable={isScrollable}
+      />
+    );
   }
 }

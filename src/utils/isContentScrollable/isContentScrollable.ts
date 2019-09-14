@@ -1,4 +1,4 @@
-const isContentScrollable = ($container, $content) => ({
+const isContentScrollable = ($container, $content): { y: boolean, x: boolean } => ({
   x: $container.offsetWidth < $content.offsetWidth,
   y: $container.offsetHeight < $content.offsetHeight,
 });
