@@ -1,8 +1,8 @@
 import React, { PureComponent, createRef } from "react";
 import PropTypes from "prop-types";
 
-import onScrollFn from "../utils/onScroll";
-import onResizeFn from "../utils/onResize";
+import getScrollBounds from "../utils/getScrollBounds";
+import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
@@ -81,13 +81,13 @@ export default class IsScrolled extends PureComponent {
 
   onScroll = () => {
     this.setState({
-      isScrolledTo: onScrollFn(this.containerRef.current, this.contentRef.current),
+      isScrolledTo: getScrollBounds(this.containerRef.current, this.contentRef.current),
     });
   };
 
   onResize = () => {
     this.setState({
-      isScrollable: onResizeFn(this.containerRef.current, this.contentRef.current),
+      isScrollable: isContentScrollable(this.containerRef.current, this.contentRef.current),
     });
   };
 

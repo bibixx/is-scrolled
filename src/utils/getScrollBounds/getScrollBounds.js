@@ -5,11 +5,11 @@ import {
   isScrolledToBottom,
 } from "../isScrolledTo";
 
-const onScroll = ($container, $scroll) => ({
+const getScrollBounds = ($container, $scroll) => ({
   left: isScrolledToLeft($container),
   top: isScrolledToTop($container),
   right: isScrolledToRight($container, $scroll),
   bottom: isScrolledToBottom($container, $scroll),
 });
 
-export default onScroll;
+export default getScrollBounds;

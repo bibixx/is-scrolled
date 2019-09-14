@@ -1,6 +1,6 @@
-const onResize = ($container, $content) => ({
+const isContentScrollable = ($container, $content) => ({
   x: $container.offsetWidth < $content.offsetWidth,
   y: $container.offsetHeight < $content.offsetHeight,
 });
 
-export default onResize;
+export default isContentScrollable;

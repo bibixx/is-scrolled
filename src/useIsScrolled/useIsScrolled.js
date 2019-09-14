@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 
-import onScrollFn from "../utils/onScroll";
-import onResizeFn from "../utils/onResize";
+import getScrollBounds from "../utils/getScrollBounds";
+import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
@@ -23,8 +23,8 @@ const useIsScrolled = () => {
     const { current: $container } = containerRef;
     const { current: $content } = contentRef;
 
-    const onScroll = () => setScrolledTo(onScrollFn($container, $content));
-    const onResize = () => setIsScrollable(onResizeFn($container, $content));
+    const onScroll = () => setScrolledTo(getScrollBounds($container, $content));
+    const onResize = () => setIsScrollable(isContentScrollable($container, $content));
 
     const { observer } = setupListeners({
       $container,
