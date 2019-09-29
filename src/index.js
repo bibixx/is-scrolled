@@ -1,7 +1,2 @@
-import React from "react";
-
-const IsScrolled = () => (
-  <div />
-);
-
-export default IsScrolled;
+export { default as useIsScrolled } from "./useIsScrolled";
+export { default } from "./IsScrolled";
