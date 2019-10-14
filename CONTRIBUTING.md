@@ -3,7 +3,7 @@
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change.
 
-Please note we have a [code of conduct](/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
+Please note we have a [code of conduct](https://github.com/bibixx/is-scrolled/CODE_OF_CONDUCT.md), please follow it in all your interactions with the project.
 
 ## Pull Request Process
 
@@ -74,10 +74,10 @@ npm run lint
 
 ### Docs
 
-Improvements to the documentation are always welcome. You can find them in the [`README`](/README.md).
+Improvements to the documentation are always welcome. You can find them in the [`README`](https://github.com/bibixx/is-scrolled/README.md).
 
 ### Examples
 
-Redux comes with [a few examples](/examples) to demonstrate various concepts and best practices.
+Redux comes with [a few examples](https://github.com/bibixx/is-scrolled/examples) to demonstrate various concepts and best practices.
 
 When adding a new example, please adhere to the style and format of the existing examples, and try to reuse as much code as possible.

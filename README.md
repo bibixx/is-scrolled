@@ -115,7 +115,7 @@ Only required dependency for this package is `React`. Make sure you have it inst
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/bibixx/is-scrolled/issues).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/bibixx/is-scrolled/issues) and [contributing](https://github.com/bibixx/is-scrolled/CONTRIBUTING.md) pages.
 
 ## Show your support
 
