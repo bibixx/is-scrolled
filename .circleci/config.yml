@@ -1,13 +1,28 @@
 version: 2
-jobs:
-  build-and-publish:
+references:
+  defaults: &defaults
     docker:
       - image: 'circleci/node:latest'
+    working_directory: ~/package
+
+jobs:
+  install-dependencies:
+    <<: *defaults
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: npm ci
+      - persist_to_workspace:
+          root: /root/package
+          paths:
+            - ./*
+
+  build-and-publish:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: /root/package
       - run:
           name: Build project
           command: npm run build
@@ -16,10 +31,10 @@ jobs:
           command: npm run semantic-release || true
 
   lint:
-    docker:
-      - image: 'circleci/node:latest'
+    <<: *defaults
     steps:
-      - checkout
+      - attach_workspace:
+          at: /root/package
       - run:
           name: Install dependencies
           command: npm ci
@@ -28,10 +43,10 @@ jobs:
           command: npm run lint-eslint
 
   check-types:
-    docker:
-      - image: 'circleci/node:latest'
+    <<: *defaults
     steps:
-      - checkout
+      - attach_workspace:
+          at: /root/package
       - run:
           name: Install dependencies
           command: npm ci
@@ -40,10 +55,10 @@ jobs:
           command: npm run lint-ts
 
   lint-commits:
-    docker:
-      - image: 'circleci/node:latest'
+    <<: *defaults
     steps:
-      - checkout
+      - attach_workspace:
+          at: /root/package
       - run:
           name: Install dependencies
           command: npm ci
@@ -56,8 +71,13 @@ workflows:
 
   build-and-publish:
     jobs:
-      - lint
-      - check-types
+      - install-dependencies
+      - lint:
+          requires:
+            - install-dependencies
+      - check-types:
+          requires:
+            - install-dependencies
       - build-and-publish:
           requires:
             - lint
