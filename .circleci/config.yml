@@ -45,9 +45,6 @@ jobs:
       - attach_workspace:
           at: ~/package
       - run:
-          name: Install dependencies
-          command: npm ci
-      - run:
           name: Run eslint
           command: npm run lint-eslint
 
@@ -57,9 +54,6 @@ jobs:
       - attach_workspace:
           at: ~/package
       - run:
-          name: Install dependencies
-          command: npm ci
-      - run:
           name: Run eslint
           command: npm run lint-ts
 
@@ -68,9 +62,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/package
-      - run:
-          name: Install dependencies
-          command: npm ci
       - run:
           name: Run eslint
           command: npm run lint-commit
@@ -87,10 +78,14 @@ workflows:
       - check-types:
           requires:
             - install-dependencies
+      - lint-commits:
+          requires:
+            - install-dependencies
       - build-and-publish:
           requires:
             - lint
             - check-types
+            - lint-commits
           filters:
             branches:
               only:
