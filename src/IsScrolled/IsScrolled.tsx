@@ -109,7 +109,6 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
     }
 
     if (observer === null) {
-      // TODO add error
       return;
     }
 
