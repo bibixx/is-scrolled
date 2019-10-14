@@ -37,12 +37,6 @@ export interface IsScrolledState {
 }
 
 export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolledState> {
-  static defaultProps = {
-    children: null,
-    render: null,
-    component: null,
-  };
-
   state = {
     isScrolledTo: {
       left: true,
@@ -61,6 +55,12 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
   contentRef = createRef<HTMLElement>();
 
   observer: ResizeObserver | null = null;
+
+  static defaultProps = {
+    children: null,
+    render: null,
+    component: null,
+  };
 
   componentDidMount() {
     const {
