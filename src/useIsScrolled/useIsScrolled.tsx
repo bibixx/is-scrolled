@@ -5,8 +5,9 @@ import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 import getPropError from "../utils/throwError";
+import { Attributes } from "../utils/attributesTypes";
 
-const useIsScrolled = () => {
+const useIsScrolled = (): Attributes => {
   const containerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLElement>(null);
   const [isScrolledTo, setScrolledTo] = useState({

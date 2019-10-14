@@ -1,39 +1,26 @@
 import React, { PureComponent, createRef } from "react";
 
+import {
+  Attributes,
+  isScrolledTo as isScrolledToType,
+  isScrollable as isScrollableType,
+} from "../utils/attributesTypes";
+
 import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
 import getPropError from "../utils/throwError";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
-interface isScrolledTo {
-  left: boolean;
-  top: boolean;
-  right: boolean;
-  bottom: boolean;
-}
-
-interface isScrollable {
-  x: boolean;
-  y: boolean;
-}
-
-export interface ChildProps {
-  isScrolledTo: isScrolledTo;
-  containerRef: React.RefObject<unknown>;
-  contentRef: React.RefObject<unknown>;
-  isScrollable: isScrollable;
-}
-
 export interface IsScrolledProps {
-  children: React.FunctionComponent<ChildProps>;
+  children: React.FunctionComponent<Attributes>;
   render: Function;
-  component: React.ComponentType<ChildProps>;
+  component: React.ComponentType<Attributes>;
 }
 
 export interface IsScrolledState {
-  isScrolledTo: isScrolledTo;
-  isScrollable: isScrollable;
+  isScrolledTo: isScrolledToType;
+  isScrollable: isScrollableType;
 }
 
 export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolledState> {
