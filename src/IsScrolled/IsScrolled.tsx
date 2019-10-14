@@ -8,7 +8,7 @@ import {
 
 import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
-import getPropError from "../utils/throwError";
+import getPropError from "../utils/getPropError";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 

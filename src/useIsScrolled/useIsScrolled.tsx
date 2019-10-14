@@ -4,7 +4,7 @@ import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
-import getPropError from "../utils/throwError";
+import getPropError from "../utils/getPropError";
 import { Attributes } from "../utils/attributesTypes";
 
 const useIsScrolled = (): Attributes => {
