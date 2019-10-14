@@ -1,36 +1,72 @@
-type scrollEdge = "Top"|"Left";
-type sizeDimension = "Width"|"Height";
+enum ScrollEdge {
+  top,
+  left
+}
+
+enum Dimension {
+  x,
+  y
+}
 
 // eslint-disable-next-line consistent-return
-const isScrolledToCloserEdge = (scrollEdge: scrollEdge) => ($container: HTMLElement) => {
+const isScrolledToCloserEdge = (scrollEdge: ScrollEdge) => ($container: HTMLElement) => {
   switch (scrollEdge) {
-    case "Top": {
+    case ScrollEdge.top: {
       return $container.scrollTop <= 0;
     }
-    case "Left": {
+    case ScrollEdge.left: {
       return $container.scrollLeft <= 0;
     }
   }
 };
 
+const calculateDistanceToFartherEdge = (
+  scrollSize: number,
+  containerSize: number,
+  distanceFromEdge: number,
+): number => scrollSize - (containerSize + distanceFromEdge);
+
 const isScrolledToFartherEdge = (
-  scrollEdge: scrollEdge,
-  sizeDimension: sizeDimension,
+  dimension: Dimension,
 ) => (
   $container: HTMLElement,
   $scroll: HTMLElement,
 ) => {
-  const scrollDimension = sizeDimension === "Width" ? $scroll.offsetWidth : $scroll.offsetHeight;
-  const containerDimension = sizeDimension === "Width" ? $container.offsetWidth : $container.offsetHeight;
-  const distanceFromEdge = scrollEdge === "Top" ? $container.scrollTop : $container.scrollLeft;
+  if (dimension === Dimension.x) {
+    const { width: scrollSize } = $scroll.getBoundingClientRect();
 
-  return (scrollDimension - containerDimension - distanceFromEdge) <= 0;
+    const { width: containerSize } = $container.getBoundingClientRect();
+
+    const distanceFromEdge = $container.scrollLeft;
+
+    const distance = calculateDistanceToFartherEdge(
+      scrollSize,
+      containerSize,
+      distanceFromEdge,
+    );
+
+    return Math.floor(distance) <= 0;
+  }
+
+  const { height: scrollSize } = $scroll.getBoundingClientRect();
+
+  const { height: containerSize } = $container.getBoundingClientRect();
+
+  const distanceFromEdge = $container.scrollTop;
+
+  const distance = calculateDistanceToFartherEdge(
+    scrollSize,
+    containerSize,
+    distanceFromEdge,
+  );
+
+  return Math.floor(distance) <= 0;
 };
 
-export const isScrolledToLeft = isScrolledToCloserEdge("Left");
+export const isScrolledToLeft = isScrolledToCloserEdge(ScrollEdge.left);
 
-export const isScrolledToTop = isScrolledToCloserEdge("Top");
+export const isScrolledToTop = isScrolledToCloserEdge(ScrollEdge.top);
 
-export const isScrolledToRight = isScrolledToFartherEdge("Left", "Width");
+export const isScrolledToRight = isScrolledToFartherEdge(Dimension.x);
 
-export const isScrolledToBottom = isScrolledToFartherEdge("Top", "Height");
+export const isScrolledToBottom = isScrolledToFartherEdge(Dimension.y);
