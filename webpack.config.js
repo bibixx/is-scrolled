@@ -3,7 +3,7 @@
 const path = require("path");
 
 const exp = {
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "index.js",
@@ -13,14 +13,17 @@ const exp = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         include: path.resolve(__dirname, "src"),
         exclude: /(node_modules|bower_components|build)/,
         use: {
-          loader: "babel-loader",
+          loader: "ts-loader",
         },
       },
     ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
   externals: [
     "react",

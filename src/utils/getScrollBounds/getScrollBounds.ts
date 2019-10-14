@@ -5,7 +5,7 @@ import {
   isScrolledToBottom,
 } from "../isScrolledTo";
 
-const getScrollBounds = ($container, $scroll) => ({
+const getScrollBounds = ($container: HTMLElement, $scroll: HTMLElement) => ({
   left: isScrolledToLeft($container),
   top: isScrolledToTop($container),
   right: isScrolledToRight($container, $scroll),
