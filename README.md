@@ -17,9 +17,9 @@
 
 ## Examples
 
-* [__Use case demo__](https://codesandbox.io/s/is-scrolled-demo-5j94s)
-* [Simple component implementation (codesandbox.io)](https://codesandbox.io/s/is-scrolled-example-3dpdz)
-* [Simple hook implementation (codesandbox.io)](https://codesandbox.io/s/is-scrolled-hook-example-3od1t)
+* [__Use case demo__](https://codesandbox.io/s/github/bibixx/is-scrolled/tree/master/examples/app)
+* [Simple component implementation (codesandbox.io)](https://codesandbox.io/s/github/bibixx/is-scrolled/tree/master/examples/component)
+* [Simple hook implementation (codesandbox.io)](https://codesandbox.io/s/github/bibixx/is-scrolled/tree/master/examples/hook)
 
 ## Usage
 
