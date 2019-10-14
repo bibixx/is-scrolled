@@ -54,7 +54,7 @@ jobs:
       - attach_workspace:
           at: ~/package
       - run:
-          name: Run eslint
+          name: Run type checks
           command: npm run lint-ts
 
   lint-commits:
@@ -63,7 +63,7 @@ jobs:
       - attach_workspace:
           at: ~/package
       - run:
-          name: Run eslint
+          name: Run commitlint
           command: npm run lint-commit
 
 workflows:
