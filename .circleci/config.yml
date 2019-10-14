@@ -39,6 +39,18 @@ jobs:
           name: Run eslint
           command: npm run lint-ts
 
+  lint-commits:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run eslint
+          command: npm run lint-commit
+
 workflows:
   version: 2
 
