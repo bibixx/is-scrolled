@@ -2,10 +2,12 @@
   "name": "is-scrolled",
   "version": "0.0.0-development",
   "description": "TBA",
-  "main": "build/index.ts",
+  "main": "build/index.js",
   "scripts": {
     "start": "webpack --watch --mode development",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/*",
+    "lint-eslint": "eslint --ext .js,.jsx,.ts,.tsx src/*",
+    "lint-ts": "tsc --noEmit",
+    "lint": "npm run lint-eslint && npm run lint-ts",
     "build": "rm -rf ./build && webpack --mode production",
     "cz": "git-cz",
     "semantic-release": "semantic-release"

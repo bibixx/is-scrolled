@@ -25,8 +25,19 @@ jobs:
           command: npm ci
       - run:
           name: Run eslint
-          command: npm run lint
+          command: npm run lint-eslint
 
+  check-types:
+    docker:
+      - image: 'circleci/node:latest'
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm ci
+      - run:
+          name: Run eslint
+          command: npm run lint-ts
 
 workflows:
   version: 2
@@ -34,9 +45,11 @@ workflows:
   build-and-publish:
     jobs:
       - lint
+      - check-types
       - build-and-publish:
           requires:
             - lint
+            - check-types
           filters:
             branches:
               only:

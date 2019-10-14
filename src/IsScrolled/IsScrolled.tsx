@@ -2,6 +2,7 @@ import React, { PureComponent, createRef } from "react";
 
 import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
+import getPropError from "../utils/throwError";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
@@ -55,11 +56,11 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
     },
   };
 
-  containerRef = createRef();
+  containerRef = createRef<HTMLElement>();
 
-  contentRef = createRef();
+  contentRef = createRef<HTMLElement>();
 
-  observer: ResizeObserver = null;
+  observer: ResizeObserver | null = null;
 
   componentDidMount() {
     const {
@@ -70,6 +71,14 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
         current: $content,
       },
     } = this;
+
+    if ($container === null) {
+      throw getPropError("containerRef");
+    }
+
+    if ($content === null) {
+      throw getPropError("contentRef");
+    }
 
     const {
       onScroll,
@@ -95,6 +104,16 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
       observer,
     } = this;
 
+
+    if ($container === null) {
+      throw getPropError("containerRef");
+    }
+
+    if (observer === null) {
+      // TODO add error
+      return;
+    }
+
     cleanupListeners({
       $container,
       onScroll,
@@ -103,12 +122,28 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
   }
 
   onScroll = () => {
+    if (this.containerRef.current === null) {
+      throw getPropError("containerRef");
+    }
+
+    if (this.contentRef.current === null) {
+      throw getPropError("contentRef");
+    }
+
     this.setState({
       isScrolledTo: getScrollBounds(this.containerRef.current, this.contentRef.current),
     });
   };
 
   onResize = () => {
+    if (this.containerRef.current === null) {
+      throw getPropError("containerRef");
+    }
+
+    if (this.contentRef.current === null) {
+      throw getPropError("contentRef");
+    }
+
     this.setState({
       isScrollable: isContentScrollable(this.containerRef.current, this.contentRef.current),
     });

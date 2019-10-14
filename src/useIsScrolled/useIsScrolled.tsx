@@ -6,8 +6,8 @@ import isContentScrollable from "../utils/isContentScrollable";
 import { setupListeners, cleanupListeners } from "../utils/listeners";
 
 const useIsScrolled = () => {
-  const containerRef = useRef(null);
-  const contentRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLElement>(null);
   const [isScrolledTo, setScrolledTo] = useState({
     left: true,
     top: true,
@@ -22,6 +22,13 @@ const useIsScrolled = () => {
   useEffect(() => {
     const { current: $container } = containerRef;
     const { current: $content } = contentRef;
+
+    if (
+      $container === null
+      || $content === null
+    ) {
+      return () => {};
+    }
 
     const onScroll = () => setScrolledTo(getScrollBounds($container, $content));
     const onResize = () => setIsScrollable(isContentScrollable($container, $content));

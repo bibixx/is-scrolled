@@ -26,6 +26,12 @@ module.exports = {
     "react/prefer-stateless-function": 0,
     "react/no-did-mount-set-state": 0,
     "no-sequences": 0,
+    "space-before-function-paren": [2, {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }],
+    "arrow-parens": ["error", "always"],
 
     "eol-last": ["error", "always"],
     "no-return-assign": 0,
@@ -38,6 +44,8 @@ module.exports = {
     "quote-props": ["error", "as-needed"],
     "indent": ["error", 2, { "SwitchCase": 1, "MemberExpression": 1 }],
     "no-plusplus": 0,
-    "no-mixed-operators": ["error", {"allowSamePrecedence": true}]
+    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "default-case": 0,
+    "semi": 0,
   }
 }
