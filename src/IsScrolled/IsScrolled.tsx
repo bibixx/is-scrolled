@@ -104,7 +104,6 @@ export default class IsScrolled extends PureComponent<IsScrolledProps, IsScrolle
       observer,
     } = this;
 
-
     if ($container === null) {
       throw getPropError("containerRef");
     }

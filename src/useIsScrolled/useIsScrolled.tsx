@@ -4,6 +4,7 @@ import getScrollBounds from "../utils/getScrollBounds";
 import isContentScrollable from "../utils/isContentScrollable";
 
 import { setupListeners, cleanupListeners } from "../utils/listeners";
+import getPropError from "../utils/throwError";
 
 const useIsScrolled = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -23,11 +24,12 @@ const useIsScrolled = () => {
     const { current: $container } = containerRef;
     const { current: $content } = contentRef;
 
-    if (
-      $container === null
-      || $content === null
-    ) {
-      return () => {};
+    if ($container === null) {
+      throw getPropError("containerRef");
+    }
+
+    if ($content === null) {
+      throw getPropError("containerRef");
     }
 
     const onScroll = () => setScrolledTo(getScrollBounds($container, $content));
